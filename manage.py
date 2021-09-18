@@ -3,9 +3,9 @@ from flask_script import Manager, Server
 
 from app import create_app
 from app import db
-from app.models import User, Post, Comment
+from app.models import User
 
-app = create_app('production')
+app = create_app('development')
 
 manager = Manager(app)
 manager.add_command('server', Server(use_debugger=True))
@@ -16,7 +16,7 @@ manager.add_command('db', MigrateCommand)
 
 @manager.shell
 def add_shell_context():
-    return {'db': db, 'User': User, 'Post': Post, 'Comment': Comment}
+    return {'db': db, 'User': User}
 
 
 @manager.command
