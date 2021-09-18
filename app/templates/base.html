@@ -17,6 +17,13 @@
   <body>
 
 
+    {% block navbar %}
+    {% include 'navbar.html' %}
+    {% endblock %} 
+
+
+    {% block content %}
+    {% endblock %}
     
     <!-- <h1>Hello, world!</h1> -->
     <!-- Optional JavaScript; choose one of the two! -->
@@ -33,11 +40,9 @@
 </html>
 
     <!-- Navbar block  -->
-    {% block navbar %}
-    {% include 'navbar.html' %}
-    {% endblock %} 
+    
+   
 
     <!-- <h1 class="heading" style="text-align:center;">Headlines</h1> -->
 
-    {% block content %}
-    {% endblock %}
+    
