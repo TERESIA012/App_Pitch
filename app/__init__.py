@@ -18,6 +18,7 @@ login_manager.login_view = 'auth.login'
 bootstrap = Bootstrap()
 db = SQLAlchemy()
 
+
 photos = UploadSet('photos',IMAGES)
 def create_app(config_name):
     app = Flask(__name__)
@@ -40,6 +41,6 @@ def create_app(config_name):
     # setting config
     # from .requests import configure_request
     # configure_request(app)
-    # configure_uploads(app,photos)
+    configure_uploads(app,photos)
     
     return app

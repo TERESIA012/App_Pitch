@@ -17,10 +17,11 @@
           {% if current_user.is_authenticated  %}
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Dropdown
+                {{current_user.username}}
+              
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="{{url_for('main.profile',uname=current_user.username)}}">Profile</a></li>  
+              <li><a class="dropdown-item" href="{{url_for('main.profile',uname=current_user.username)}}">Profile</a></li>  
               <li><a class="dropdown-item" href="{{url_for('main.index')}}">Pitch</a></li>
               <li><a class="dropdown-item" href="{{url_for('auth.logout')}}">Logout</a></li>
               <li><hr class="dropdown-divider"></li>
