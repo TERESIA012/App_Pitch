@@ -4,15 +4,18 @@
 
 
 
-{% for Posts in posts%}
-<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 review-card">
-    <h2> {{ posts.title}} </h2>
-    <p> {{ posts.id | truncate(30) }}</p>
-    <p> {{ posts.name }}</p>
-
-
-
-
+{% for post in posts%}
+<div class="col-md-4">
+    <div class="card text-white bg-dark mb-3" style="">
+        <div class="card-header">{{post.title}}</div>
+        <div class="card-body">
+            <h5 class="card-title">{{post.category}}</h5>
+                <p class="card-text">{{post.author}}</p>
+                <p class="card-text">{{post.date}}</p>
+                <p class="card-text">{{post.post}}</p>
+                <button type="button" class="btn btn-dark">See more</button>        
+        </div>
+    </div>
 </div>
 {% endfor %}
 

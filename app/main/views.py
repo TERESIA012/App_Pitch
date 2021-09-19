@@ -1,4 +1,5 @@
 from flask import render_template, request, redirect, url_for, abort
+from flask.helpers import flash
 from . import main
 from .forms import UpdateProfile
 from ..models import User
@@ -12,7 +13,7 @@ from ..models import Post, Comment, User, Upvote, Downvote
 
 @main.route('/')
 def index():
-    posts = Post.query.all()
+    posts = Post.query.order_by(Post.added_date.desc()).all()
     fashion= Post.query.filter_by(category='fashion').all()
     sports = Post.query.filter_by(category='sports').all()
     business = Post.query.filter_by(category='Business').all()
@@ -103,10 +104,15 @@ def new_post():
         post = form.post.data
         category = form.category.data
         user_id = current_user._get_current_object().id
-        post_obj = Post(post=post, title=title, category=category, user_id=user_id)
-        post_obj.save()
-        return redirect(url_for('main.index'))
-    return render_template('pitch.html', form=form)
+        # post_obj = Post(post=post, title=title, category=category, user_id=user_id)
+        new_post=Post(title=title,post=post,category=category)
+        new_post.save()
+        db.session.add(new_post)
+        db.session.commit()
+        # post_obj.save()
+        flash('Your pitch has been created successfully!')
+        return redirect(url_for('main.index',uname=current_user.username))
+    return render_template('new_pitch.html', form=form ,title='Pitch Perfect')
 
 
 @main.route('/comment/<int:post_id>', methods=['GET', 'POST'])
