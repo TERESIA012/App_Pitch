@@ -1,25 +1,19 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SelectField, TextAreaField, SubmitField
+from wtforms import StringField,TextAreaField,SubmitField,SelectField
+from wtforms import validators
 from wtforms.validators import Required
 
+class UpdateProfile(FlaskForm):
+    bio = TextAreaField('Tell us about you:',validators = [Required()])
+    submit = SubmitField('Submit')
 
 class PostForm(FlaskForm):
-    title = StringField('Title', validators=[Required()])
-    post = TextAreaField('Pitch', validators=[Required()])
-    category = SelectField('Category', choices=[('product', 'product'), ('idea', 'idea'), ('business', 'business')],
-                           validators=[Required()])
-    submit = SubmitField('Post')
+  author = StringField(' author:',validators=[Required()])
+  category = SelectField("Choose your desired category:",choices=[('Experience','Experience'),('Technology','Technology'),('Education','Education'),('Humour','Humour'),('Intelligence','Intelligence')])
+  pitch = TextAreaField('Add text here:',validators=[Required()])
+  submit = SubmitField('Submit')
 
 
 class CommentForm(FlaskForm):
-    comment = TextAreaField('Comment', validators=[Required()])
-    submit = SubmitField('Post')
-
-
-class Vote(FlaskForm):
-    submit = SelectField('Like')
-
-
-class UpdateProfile(FlaskForm):
-    bio = TextAreaField('bio', validators=[Required()])
-    submit = SubmitField('Post')
+  comment = TextAreaField('Add a Comment:',validators=[Required()])
+  submit = SubmitField('Submit')     

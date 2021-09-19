@@ -2,6 +2,7 @@ from . import db
 from . import login_manager
 from flask_login import UserMixin
 from werkzeug import generate_password_hash,check_password_hash
+from datetime import datetime
 
 
 
@@ -37,12 +38,14 @@ class User(UserMixin, db.Model):
     
 class Post(db.Model):
     __tablename__ = 'posts'
-    id = db.Column(db.Integer, primary_key = True)
-    title = db.Column(db.String(255),nullable = False)
-    post = db.Column(db.Text(), nullable = False)
+    id = db.Column(db.Integer,primary_key=True)
+    post = db.Column(db.String(255))
+    category = db.Column(db.String(255))
+    title = db.Column(db.String(255))
+    vote_count = db.Column(db.Integer)
+    added_date = db.Column(db.DateTime,default=datetime.utcnow)
+    author = db.Column(db.Integer,db.ForeignKey('users.id'))
     
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    category = db.Column(db.String(255), index = True,nullable = False)
     def save(self):
         db.session.add(self)
         db.session.commit()

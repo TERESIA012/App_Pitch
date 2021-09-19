@@ -1,0 +1,21 @@
+{% macro displayPost(pitch_list) %}
+
+    {% for pitch in pitch_list %}
+    <div class="col-xs-12 col-sm-4 col-md-2 col-lg-6">
+
+    <div class="card text-white bg-dark mb-3">
+        <div class="card-header"><h5>{{post.name}}</h5></div>
+        <div class="card-body">
+          <p class="card-text">{{post.post}}.</p>
+        </div>
+      <span class="mb-2"> <i id="upvote" onclick="upvote()" title="Upvote this pitch" class=" mx-2 bi bi-hand-thumbs-up-fill">0</i>
+        <i id="downvote" onclick="downvote()" title="Downvote this pitch" class=" mx-2 bi bi-hand-thumbs-down-fill">0</i></span>
+
+        <a href="/comments/{{posts.id}}" class="btn btn-outline-light btn-sm">Comments</a>
+      </div>
+      </div>
+
+    {% endfor %}
+
+
+{% endmacro %}

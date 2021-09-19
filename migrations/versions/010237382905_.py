@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: b5dbd41eb6d3
+Revision ID: 010237382905
 Revises: 
-Create Date: 2021-09-19 14:50:26.510629
+Create Date: 2021-09-19 15:26:07.142893
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'b5dbd41eb6d3'
+revision = '010237382905'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -31,14 +31,15 @@ def upgrade():
     op.create_index(op.f('ix_users_username'), 'users', ['username'], unique=True)
     op.create_table('posts',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('title', sa.String(length=255), nullable=False),
-    sa.Column('post', sa.Text(), nullable=False),
-    sa.Column('user_id', sa.Integer(), nullable=True),
-    sa.Column('category', sa.String(length=255), nullable=False),
-    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
+    sa.Column('post', sa.String(length=255), nullable=True),
+    sa.Column('category', sa.String(length=255), nullable=True),
+    sa.Column('title', sa.String(length=255), nullable=True),
+    sa.Column('vote_count', sa.Integer(), nullable=True),
+    sa.Column('added_date', sa.DateTime(), nullable=True),
+    sa.Column('author', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['author'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-    op.create_index(op.f('ix_posts_category'), 'posts', ['category'], unique=False)
     op.create_table('comments',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('comment', sa.Text(), nullable=False),
@@ -74,7 +75,6 @@ def downgrade():
     op.drop_table('upvotes')
     op.drop_table('downvotes')
     op.drop_table('comments')
-    op.drop_index(op.f('ix_posts_category'), table_name='posts')
     op.drop_table('posts')
     op.drop_index(op.f('ix_users_username'), table_name='users')
     op.drop_table('users')
