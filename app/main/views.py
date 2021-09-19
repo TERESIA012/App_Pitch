@@ -134,7 +134,7 @@ def comment(post_id):
         new_comment.save_comment()
         new_comments = [new_comment]
         print(new_comments)
-        
+        flash('Your comment has been created successfully!')
         return redirect(url_for('.comment', post_id=post_id))
     return render_template('comment.html', form=form, post=post, comments=comments, user=user)
 
@@ -170,8 +170,8 @@ def user():
 @login_required
 def upvote(id):
     post = Post.query.get(id)
-    vote_mpya = Upvote(post=post, upvote=1)
-    vote_mpya.save()
+    new_vote = Upvote(post=post, upvote=1)
+    new_vote.save()
     return redirect(url_for('main.posts'))
 
 
@@ -179,6 +179,6 @@ def upvote(id):
 @login_required
 def downvote(id):
     post = Post.query.get(id)
-    vm = Downvote(post=post, downvote=1)
-    vm.save()
+    nv = Downvote(post=post, downvote=1)
+    nv.save()
     return redirect(url_for('main.posts'))
