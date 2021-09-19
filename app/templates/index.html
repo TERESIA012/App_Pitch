@@ -8,9 +8,8 @@
         {% if messages %}
         {% for category, message in messages %}
         <div class="alert alert-{{ category }} d-flex align-items-center mt-4" role="alert">
-            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="{{ category }}:">
-                <use xlink:href="#exclamation-triangle-fill" />
-            </svg>
+            <div class="alert">{{ category }}</div>
+            
             <div>
                 {{ message }}
             </div>
@@ -18,3 +17,6 @@
         {% endfor %}
         {% endif %}
         {% endwith %}
+
+
+        {% endblock %}

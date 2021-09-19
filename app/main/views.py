@@ -16,6 +16,7 @@ def index():
     fashion= Post.query.filter_by(category='fashion').all()
     sports = Post.query.filter_by(category='sports').all()
     business = Post.query.filter_by(category='Business').all()
+    posts = Post.query.order_by(Post.added_date.desc()).all()
     return render_template('index.html', business=business, fashion=fashion, sports=sports, posts=posts)
 
 
