@@ -1,7 +1,11 @@
-from flask import render_template, redirect, url_for
-from flask_login import login_required, current_user
-
+from flask import render_template, request, redirect, url_for, abort
 from . import main
+from .forms import UpdateProfile
+from ..models import User
+from flask_login import login_required
+from .. import db,photos
+from flask_login import login_required, current_user
+# import markdown2  
 from .forms import PostForm, CommentForm, UpdateProfile
 from ..models import Post, Comment, User, Upvote, Downvote
 
@@ -9,10 +13,10 @@ from ..models import Post, Comment, User, Upvote, Downvote
 @main.route('/')
 def index():
     posts = Post.query.all()
-    product = Post.query.filter_by(category='product').all()
-    idea = Post.query.filter_by(category='idea').all()
+    fashion= Post.query.filter_by(category='fashion').all()
+    sports = Post.query.filter_by(category='sports').all()
     business = Post.query.filter_by(category='Business').all()
-    return render_template('index.html', business=business, product=product, idea=idea, posts=posts)
+    return render_template('index.html', business=business, fashion=fashion, sports=sports, posts=posts)
 
 
 @main.route('/posts')
@@ -22,6 +26,71 @@ def posts():
     likes = Upvote.query.all()
     user = current_user
     return render_template('pitch.html', posts=posts, likes=likes, user=user)
+
+
+
+
+@main.route("/user/<uname>")
+@login_required
+def profile(uname):
+    user = User.query.filter_by(username=uname).first()
+
+    if user is None:
+        abort(404)
+
+    return render_template("profile/profile.html", user=user)
+
+
+@main.route("/user/<uname>/update", methods=["GET", "POST"])
+def update_profile(uname):
+    user = User.query.filter_by(username=uname).first()
+    if user is None:
+        abort(404)
+
+    form = UpdateProfile()
+
+    if form.validate_on_submit():
+        user.bio = form.bio.data
+
+        db.session.add(user)
+        db.session.commit()
+
+        return redirect(url_for(".profile", uname=user.username))
+
+    return render_template("profile/update.html", form=form)
+
+
+
+@main.route('/user/<uname>/update/pic',methods= ['POST'])
+@login_required
+def update_pic(uname):
+    user = User.query.filter_by(username = uname).first()
+    if 'photo' in request.files:
+        filename = photos.save(request.files['photo'])
+        path = f'photos/{filename}'
+        user.profile_pic_path = path
+        db.session.commit()
+    return redirect(url_for('main.profile',uname=uname))
+
+
+
+# @main.route('/user/<uname>/update',methods = ['GET','POST'])
+# def update_profile(uname):
+#     user = User.query.filter_by(username = uname).first()
+#     if user is None:
+#         abort(404)
+
+#     form = UpdateProfile()
+
+#     if form.validate_on_submit():
+#         user.bio = form.bio.data
+
+#         db.session.add(user)
+#         db.session.commit()
+
+#         return redirect(url_for('.profile',uname=user.username))
+
+#     return render_template('profile/update.html',form =form)
 
 
 @main.route('/new_post', methods=['GET', 'POST'])
@@ -72,18 +141,21 @@ def user():
     return render_template('profile.html', user=user)
 
 
-@main.route('/user/<name>/update_profile', methods=['POST', 'GET'])
-@login_required
-def updateprofile(name):
-    form = UpdateProfile()
-    user = User.query.filter_by(username=name).first()
-    if user is None:
-        error = 'The user does not exist'
-    if form.validate_on_submit():
-        user.bio = form.bio.data
-        user.save()
-        return redirect(url_for('.profile', name=name))
-    return render_template('profile/update_profile.html', form=form)
+
+
+
+# @main.route('/user/<name>/update_profile', methods=['POST', 'GET'])
+# @login_required
+# def updateprofile(name):
+#     form = UpdateProfile()
+#     user = User.query.filter_by(username=name).first()
+#     if user is None:
+#         error = 'The user does not exist'
+#     if form.validate_on_submit():
+#         user.bio = form.bio.data
+#         user.save()
+#         return redirect(url_for('.profile', name=name))
+#     return render_template('profile/update_profile.html', form=form)
 
 
 @main.route('/like/<int:id>', methods=['POST', 'GET'])
