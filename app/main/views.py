@@ -131,9 +131,10 @@ def comment(post_id):
             post_id=post_id,
             user_id=user_id
         )
-        new_comment.save()
+        new_comment.save_comment()
         new_comments = [new_comment]
         print(new_comments)
+        
         return redirect(url_for('.comment', post_id=post_id))
     return render_template('comment.html', form=form, post=post, comments=comments, user=user)
 
