@@ -2,18 +2,12 @@
 {% import "bootstrap/wtf.html" as wtf %}
 {% import "macros.html" as macro %}
 {% block content %}
-
-
-
-
-
-
 <div class="card m-5">
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
     {% for category, message in messages %}
     <div class="alert alert-{{ category }} d-flex align-items-center mt-4" role="alert">
-        <!-- <div class="alert">{{ category }}</div> -->
+    
 
         <div>
             {{ message }}
@@ -29,4 +23,10 @@
     {{macro.display(posts)}}
 </div>
 
+
 {% endblock %}
+
+
+
+
+

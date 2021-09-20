@@ -13,7 +13,7 @@ from ..models import Post, Comment, User, Upvote, Downvote
 
 @main.route('/')
 def index():
-    posts = Post.query.order_by(Post.added_date.desc()).all()
+    
     Fashion= Post.query.filter_by(category='Fashion').all()
     Sports = Post.query.filter_by(category='Sports').all()
     Business = Post.query.filter_by(category='Business').all()
