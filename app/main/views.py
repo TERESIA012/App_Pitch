@@ -14,11 +14,13 @@ from ..models import Post, Comment, User, Upvote, Downvote
 @main.route('/')
 def index():
     posts = Post.query.order_by(Post.added_date.desc()).all()
-    fashion= Post.query.filter_by(category='fashion').all()
-    sports = Post.query.filter_by(category='sports').all()
-    business = Post.query.filter_by(category='Business').all()
+    Fashion= Post.query.filter_by(category='Fashion').all()
+    Sports = Post.query.filter_by(category='Sports').all()
+    Business = Post.query.filter_by(category='Business').all()
+    Education = Post.query.filter_by(category='Education').all()
+    Humour = Post.query.filter_by(category='Humour').all()
     posts = Post.query.order_by(Post.added_date.desc()).all()
-    return render_template('index.html', business=business, fashion=fashion, sports=sports, posts=posts)
+    return render_template('index.html', Business=Business, Fashion=Fashion, Sports=Sports,Education=Education,Humour=Humour, posts=posts)
 
 
 @main.route('/posts')

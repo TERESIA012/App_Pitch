@@ -15,6 +15,10 @@
         {% endif %}
         {% if user == current_user %}
 
+        <div class="cont">
+            <p>{{current_user.bio}}</p>
+        </div>
+
         <form action="{{url_for('main.update_pic',uname=user.username)}}" method="post" enctype="multipart/form-data">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
             <input type="file" name="photo" class="form-control" required>
