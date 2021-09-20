@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 0fe5d3b12912
+Revision ID: 39e88548c904
 Revises: 
-Create Date: 2021-09-19 22:12:55.256189
+Create Date: 2021-09-20 17:38:58.426149
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '0fe5d3b12912'
+revision = '39e88548c904'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -51,19 +51,19 @@ def upgrade():
     )
     op.create_table('downvotes',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('downvote', sa.Integer(), nullable=False),
-    sa.Column('Comment_id', sa.Integer(), nullable=True),
+    sa.Column('downvote', sa.Integer(), nullable=True),
+    sa.Column('post_id', sa.Integer(), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['Comment_id'], ['comments.id'], ),
+    sa.ForeignKeyConstraint(['post_id'], ['posts.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('upvotes',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('upvote', sa.Integer(), nullable=False),
-    sa.Column('comment_id', sa.Integer(), nullable=True),
+    sa.Column('upvote', sa.Integer(), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['comment_id'], ['comments.id'], ),
+    sa.Column('post_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['post_id'], ['posts.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )

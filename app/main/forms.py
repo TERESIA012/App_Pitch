@@ -10,7 +10,7 @@ class UpdateProfile(FlaskForm):
 class PostForm(FlaskForm):
   title = StringField(' title:',validators=[Required()]) 
   post = StringField(' post:',validators=[Required()]) 
-  author = StringField(' author:',validators=[Required()])
+  username= StringField(' username:',validators=[Required()])
   category = SelectField("Choose your desired category:",choices=[('Business','Business'),('Fashion','Fashion'),('Education','Education'),('Humour','Humour'),('Sports','Sports')])
 #   pitch = TextAreaField('Add text here:',validators=[Required()])
   submit = SubmitField('Submit')

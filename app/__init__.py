@@ -9,6 +9,7 @@ from flask_wtf.csrf import CSRFProtect
 from flask_simplemde import SimpleMDE
 
 
+
 mail = Mail()
 login_manager = LoginManager()
 csrf = CSRFProtect()
@@ -42,5 +43,7 @@ def create_app(config_name):
     # from .requests import configure_request
     # configure_request(app)
     configure_uploads(app,photos)
+    
+    
     
     return app

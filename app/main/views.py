@@ -170,8 +170,26 @@ def user():
 @login_required
 def upvote(id):
     post = Post.query.get(id)
-    new_vote = Upvote(post=post, upvote=1)
-    new_vote.save()
+    if post is None:
+        abort(404)
+        
+    upvote= Upvote.query.filter_by(user_id=current_user.id, post_id=id).first()
+    if upvote is not None:
+        
+        db.session.delete(upvote)
+        db.session.commit()
+        
+        return redirect(url_for('.index'))
+    
+    new_like = Upvote(
+        user_id=current_user.id,
+        post_id=id
+        
+    )
+    db.session.add(new_like)
+    db.session.commit()
+
+        
     return redirect(url_for('main.posts'))
 
 

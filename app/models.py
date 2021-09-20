@@ -61,8 +61,7 @@ class Comment(db.Model):
     comment = db.Column(db.Text(), nullable = False)
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    upvote = db.relationship('Upvote',backref='comment',lazy='dynamic')
-    downvote = db.relationship('Downvote',backref='comment',lazy='dynamic')
+    
     def save_comment(self):
         db.session.add(self)
         db.session.commit()
@@ -77,9 +76,10 @@ class Comment(db.Model):
 class Upvote(db.Model):
     __tablename__ = 'upvotes'
     id = db.Column(db.Integer, primary_key = True)
-    upvote = db.Column(db.Integer, nullable = False)
-    comment_id = db.Column(db.Integer, db.ForeignKey('comments.id'))
+    upvote = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
+    
     def save_upvote(self):
         db.session.add(self)
         db.session.commit()
@@ -92,6 +92,6 @@ class Upvote(db.Model):
 class Downvote(db.Model):
     __tablename__= 'downvotes'
     id = db.Column(db.Integer, primary_key = True)
-    downvote = db.Column(db.Integer, nullable = False)
-    Comment_id = db.Column(db.Integer, db.ForeignKey('comments.id'))
+    downvote = db.Column(db.Integer)
+    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
