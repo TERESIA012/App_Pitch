@@ -190,7 +190,7 @@ def upvote(id):
     db.session.commit()
 
         
-    return redirect(url_for('main.posts'))
+    return redirect(url_for('main.index'))
 
 @main.route('/like/<int:id>', methods=['POST', 'GET'])
 @login_required
@@ -216,7 +216,7 @@ def downvote(id):
     db.session.commit()
 
         
-    return redirect(url_for('main.posts'))
+    return redirect(url_for('main.index'))
 
 
 
