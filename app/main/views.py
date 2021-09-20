@@ -192,7 +192,7 @@ def upvote(id):
         
     return redirect(url_for('main.index'))
 
-@main.route('/like/<int:id>', methods=['POST', 'GET'])
+@main.route('/dislike/<int:id>', methods=['POST', 'GET'])
 @login_required
 def downvote(id):
     post = Post.query.get(id)

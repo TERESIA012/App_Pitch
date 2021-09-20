@@ -45,6 +45,8 @@ class Post(db.Model):
     vote_count = db.Column(db.Integer)
     added_date = db.Column(db.DateTime,default=datetime.utcnow)
     author = db.Column(db.Integer,db.ForeignKey('users.id'))
+    upvote = db.relationship('Upvote', backref='post', lazy='dynamic')
+    downvote = db.relationship('Downvote', backref='post', lazy='dynamic')
     
     def save(self):
         db.session.add(self)
@@ -95,3 +97,13 @@ class Downvote(db.Model):
     downvote = db.Column(db.Integer)
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    
+    
+    def save_downvote(self):
+        db.session.add(self)
+        db.session.commit()
+    def delete_downvotevote(self):
+        db.session.delete(self)
+        db.session.commit()
+    def __repr__(self):
+        return f'Downvote: {self.downvote}'
