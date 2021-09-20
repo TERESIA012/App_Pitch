@@ -192,11 +192,38 @@ def upvote(id):
         
     return redirect(url_for('main.posts'))
 
-
-@main.route('/dislike/<int:id>', methods=['GET', 'POST'])
+@main.route('/like/<int:id>', methods=['POST', 'GET'])
 @login_required
 def downvote(id):
     post = Post.query.get(id)
-    nv = Downvote(post=post, downvote=1)
-    nv.save()
+    if post is None:
+        abort(404)
+        
+    downvote= Downvote.query.filter_by(user_id=current_user.id, post_id=id).first()
+    if downvote is not None:
+        
+        db.session.delete(downvote)
+        db.session.commit()
+        
+        return redirect(url_for('.index'))
+    
+    new_like = Downvote(
+        user_id=current_user.id,
+        post_id=id
+        
+    )
+    db.session.add(new_like)
+    db.session.commit()
+
+        
     return redirect(url_for('main.posts'))
+
+
+
+# @main.route('/dislike/<int:id>', methods=['GET', 'POST'])
+# @login_required
+# def downvote(id):
+#     post = Post.query.get(id)
+#     nv = Downvote(post=post, downvote=1)
+#     nv.save()
+#     return redirect(url_for('main.posts'))
