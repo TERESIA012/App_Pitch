@@ -1,45 +1,26 @@
-<!-- {% if user.profile_image %}
-<img src="{{url_for('static',filename=user.profile_image)}}" alt="" class="card-img-top">
-{%else%}
-<img src="https://st2.depositphotos.com/1104517/11965/v/600/depositphotos_119659092-stock-illustration-male-avatar-profile-picture-vector.jpg"
-    class="card-img-top" alt="My profile picture">
-{% endif %} -->
 
 
+<link rel="stylesheet" href="{{ url_for('static',filename='css/styles.css')}}">
 
 
 {% if user == current_user %}
 <a href="{{url_for('main.update_profile',uname =user.username)}}">Edit profile</a>
 {% endif %}
-<div class="col-md-4">
-  {% if user.profile_pic_path %}
-  <img src="{{url_for('static',filename=user.profile_pic_path)}}" alt="" class="img-thumbnail">
-  {% else %}
-  <p>No profile picture</p>
-  {% endif %}
-  {% if user == current_user %}
+<div class="col-md-4" id="profile">
+    {% if user.profile_pic_path %}
+    <img src="{{url_for('static',filename=user.profile_pic_path)}}" alt="" class="img-thumbnail">
+    {% else %}
+    <p>No profile picture</p>
+    {% endif %}
+    {% if user == current_user %}
 
-  <form action="{{url_for('main.update_pic',uname=user.username)}}" method="post" enctype="multipart/form-data">
-    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-    <input type="file" name="photo" class="form-control" required>
-    <input type="submit">
-  </form>
-  {% endif %}
+    <form action="{{url_for('main.update_pic',uname=user.username)}}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <input type="file" name="photo" class="form-control" required>
+        <input type="submit">
+    </form>
+    {% endif %}
 </div>
 
 
-<!-- 
-<div class="card mb-3" style="max-width: 540px;">
-    <div class="row g-0">
-      <div class="col-md-4">
-        <img src="{{url_for('static',filename=user.profile_image)}}" class="img-fluid rounded-start" alt="...">
-      </div>
-      <div class="col-md-8">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-        </div>
-      </div>
-    </div>
-  </div> -->
+

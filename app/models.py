@@ -72,6 +72,8 @@ class Comment(db.Model):
     def __repr__(self):
         return f'Comment: {self.comment}'
     
+    
+    
 class Upvote(db.Model):
     __tablename__ = 'upvotes'
     id = db.Column(db.Integer, primary_key = True)
