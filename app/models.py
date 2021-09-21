@@ -45,8 +45,10 @@ class Post(db.Model):
     vote_count = db.Column(db.Integer)
     added_date = db.Column(db.DateTime,default=datetime.utcnow)
     author = db.Column(db.Integer,db.ForeignKey('users.id'))
+    
     upvote = db.relationship('Upvote', backref='post', lazy='dynamic')
     downvote = db.relationship('Downvote', backref='post', lazy='dynamic')
+    
     
     def save(self):
         db.session.add(self)
@@ -63,6 +65,7 @@ class Comment(db.Model):
     comment = db.Column(db.Text(), nullable = False)
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    
     
     def save_comment(self):
         db.session.add(self)
