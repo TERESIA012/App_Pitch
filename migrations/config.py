@@ -3,8 +3,8 @@ import os
 class Config:
     #debug = True
     SECRET_KEY = 'gaidi'
-    
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://moringa:Access@localhost/pitch'
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
     
     #  email configurations
     MAIL_SERVER = 'smtp.gmail.com'
@@ -14,10 +14,6 @@ class Config:
     MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
     MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
     UPLOADED_PHOTOS_DEST = 'app/static/photos'
-    
-    @staticmethod
-    def init_app(app):
-        pass
     
     
 class ProdConfig(Config):

@@ -1,0 +1,32 @@
+{% macro display(posts)%}
+
+
+
+
+
+{% for post in posts%}
+<div class="col-md-4">
+    <div class="card  mb-3" id="card1" style"">
+        <div class="card-header">{{post.title}}</div>
+        <div class="card-body">
+            <h5 class="card-title">{{post.category}}</h5>
+
+            <p class="card-text">{{post.added_date}}</p>
+            <p class="card-text">{{post.post}}</p>
+            <!-- <p class="card-text">{{post.user_id}}</p> -->
+            <a href="{{url_for('main.comment',post_id=post.id)}}" class="btn btn-secondary">Comments</a>
+            <a href="{{url_for('main.upvote',id=post.id)}}"><i class="far fa-thumbs-up "
+                    style="margin-right:25px"></i>{{post.upvote.count()}}</a>
+            <a href="{{url_for('main.downvote',id=post.id)}}"><i class="far fa-thumbs-down "
+                    style="margin-right:25px"></i>{{post.downvote.count()}}</a>
+
+        </div>
+    </div>
+</div>
+
+
+
+{% endfor %}
+
+{% endmacro %}
+
