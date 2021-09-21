@@ -5,7 +5,7 @@ from app import create_app
 from app import db
 from app.models import User,Post,Comment,Upvote,Downvote
 
-app = create_app('development')
+app = create_app('production')
 
 manager = Manager(app)
 manager.add_command('server', Server(use_debugger=True))
