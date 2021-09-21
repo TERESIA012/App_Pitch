@@ -5,13 +5,13 @@
 
 
 {% for post in posts%}
-<div class="col-md-4">
+<div class="col-md-3">
     <div class="card  mb-3" id="card1" style"">
         <div class="card-header">{{post.title}}</div>
         <div class="card-body">
             <h5 class="card-title">{{post.category}}</h5>
 
-            <p class="card-text">{{post.added_date}}</p>
+            <p class="card-text">{{post.added_date.strftime('%b %d, %Y')}}</p>
             <p class="card-text">{{post.post}}</p>
             <!-- <p class="card-text">{{post.user_id}}</p> -->
             <a href="{{url_for('main.comment',post_id=post.id)}}" class="btn btn-secondary">Comments</a>
